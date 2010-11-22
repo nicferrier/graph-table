@@ -1,0 +1,26 @@
+Making arbitary graphs from data isn't easy... especially when the
+data is on a well protected SQL server in the infrastructure of some
+web startup.
+
+This project, which hasn't got a name yet, is an attempt to solve
+that.
+
+I am aiming for a RESTfull view of a table of data so that you can
+change the metadata associated with a graph and a table of data as
+easily as you can change a wiki.
+
+The first step is to get the data into the webservice and for this I
+have rewritten SQL COPY. Well, ok. it's a bit more advanced than that.
+
+I am aiming for something that is as easy as this to use:
+
+{{{
+psql db -c 'SELECT domain, time, count FROM sometable;' \
+    | curl -s http://nicsdatabin.com/' \
+           -d domain=text \
+           -d time='timestamp with timezone' \
+           -d count=integer \
+           -d data=@-
+}}}
+
+this example is with Postgresql.
